@@ -10,6 +10,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import io.spring.demo.issuesdashboard.GithubProperties;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,7 @@ public class GithubClient {
 		return this.restTemplate.getForEntity(EVENT_ISSUES_URL, RepositoryEvent[].class, orgName, repoName);
 	}
 
+	@Cacheable("events")
 	public List<RepositoryEvent> fetchEventsList(String orgName, String repoName) {
 		return Arrays.asList(fetchEvents(orgName, repoName).getBody());
 	}
