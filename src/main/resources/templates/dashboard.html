@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Github Dashboard</title>
+
+    <link data-th-href="@{/webjars/bulma/0.6.0/css/bulma.css}" rel="stylesheet">
+    <link rel="stylesheet" data-th-href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}"/>
+    <script data-th-src="@{/webjars/timeago.js/3.0.0/dist/timeago.js}"></script>
+</head>
+<body>
+<section class="hero is-primary is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                <i class="fa fa-github-square" aria-hidden="true"></i>&nbsp;Github Dashboard
+            </h1>
+        </div>
+    </div>
+</section>
+<section data-th-each="entry : ${entries}" class="section">
+    <div class="container">
+        <h1 class="title">[[${entry.project.orgName}]] / [[${entry.project.repoName}]]</h1>
+        <table class="table is-hoverable is-fullwidth">
+            <thead>
+            <th>Actor</th>
+            <th>Action</th>
+            <th>Issue title</th>
+            <th>Time</th>
+            </thead>
+            <tbody>
+            <tr data-th-each="event : ${entry.events}">
+                <td><a data-th-href="${event.actor.htmlUrl}">[[${event.actor.login}]]</a></td>
+                <td><code>[[${event.type}]]</code></td>
+                <td><span data-th-if="${event.issue}"><a
+                        data-th-href="${event.issue.htmlUrl}">[[${event.issue.title}]]</a></span></td>
+                <td>
+                    <time data-th-attr="datetime=${event.creationTime}">[[${event.creationTime}]]</time>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<script>
+    var timeagoInstance = timeago();
+    var nodes = document.querySelectorAll('time');
+    timeagoInstance.render(nodes, 'en_US');
+</script>
+</body>
+</html>
