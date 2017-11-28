@@ -7,6 +7,7 @@ import java.util.stream.StreamSupport;
 import io.spring.demo.issuesdashboard.github.GithubClient;
 import io.spring.demo.issuesdashboard.github.RepositoryEvent;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +28,16 @@ public class EventsController {
 
 	@GetMapping("/events/{projectName}")
 	@ResponseBody
-	public RepositoryEvent[] fetchEvents(@PathVariable String projectName) {
-
+	public ResponseEntity<RepositoryEvent[]> fetchEvents(@PathVariable String projectName) {
 		GithubProject project = this.repository.findByRepoName(projectName);
-		return this.githubClient.fetchEvents(project.getOrgName(), project.getRepoName()).getBody();
+		if (project == null) {
+			return ResponseEntity.notFound().build();
+		}
+		ResponseEntity<RepositoryEvent[]> response = this.githubClient
+				.fetchEvents(project.getOrgName(), project.getRepoName());
+		return ResponseEntity.ok()
+				.eTag(response.getHeaders().getETag())
+				.body(response.getBody());
 	}
 
 	@GetMapping("/")
