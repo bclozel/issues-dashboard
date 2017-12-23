@@ -63,7 +63,8 @@ public class RepositoryEvent {
 		HEAD_REF_DELETED("head_ref_deleted"),
 		HEAD_REF_RESTORED("head_ref_restored"),
 		CONVERTED_NOTE_TO_ISSUE("converted_note_to_issue"),
-		MOVED_COLUMNS_IN_PROJECT("moved_columns_in_project");
+		MOVED_COLUMNS_IN_PROJECT("moved_columns_in_project"),
+		MARKED_AS_DUPLICATE("marked_as_duplicate");
 
 		private String type;
 
