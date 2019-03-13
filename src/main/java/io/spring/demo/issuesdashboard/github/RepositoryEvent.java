@@ -67,8 +67,8 @@ public class RepositoryEvent {
 		COMMENT_DELETED("comment_deleted"),
 		REVIEW_REQUESTED("review_requested"),
 		HEAD_REF_FORCE_PUSHED("head_ref_force_pushed"),
-		BASE_REF_FORCE_PUSHED("base_ref_force_pushed");
-
+		BASE_REF_FORCE_PUSHED("base_ref_force_pushed"),
+		MARKED_AS_DUPLICATE("marked_as_duplicate");
 		private String type;
 
 		Type(String type) {
