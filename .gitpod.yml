@@ -1,0 +1,6 @@
+ports:
+  - port: 8443
+    onOpen: open-preview
+tasks:
+  - init: mvn clean install
+    command: java -jar target/issues-dashboard-0.0.1-SNAPSHOT.jar
